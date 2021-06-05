@@ -10,7 +10,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 * The dashboard updates all of the plots any time that a new sample is selected.
 
 To-do list:
-* Improve code and format. 
+* Add gauge plot. 
 
 ## Status
 Project is: _finished_, _subject to improvement_.
