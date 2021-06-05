@@ -29,5 +29,32 @@ function Plots(input){
         var data = [Traces];
         // Create horizontal var chart
         Plotly.newPlot("bar", data, layout);
+
+        // Create a bubble chart that displays each sample
+        var BubblePlot = {
+            // Ue otu_ids for the x values
+            x: otu_ids,
+            // Use sample_values for the y values
+            y: otu_values,
+            // Use Sample_values for the marker size
+            text: otu_labels,
+            mode: "markers",
+            marker: {
+                size:otu_values,
+                color:otu_ids,
+                colorscale: "Earth"
+            }
+        }
+
+        var Layoutb = {
+            margin: {
+                t:10  
+            },
+            hovermode: "closest",
+            xaxis: {
+                title: "OTU ID"
+            }
+        }
+        Plotly.newPlot("bubble", BubblePlot, Layoutb)
     });
-}   
+}
