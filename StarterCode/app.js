@@ -9,7 +9,7 @@ function Plots(input){
         // Use `otu:ids` as the values for the bar chart.
         var otu_ids = ids[0].otu.ids;
         // Use `otu:labels` as the values for the bar chart.
-        var otu_labels = ids [0].otu_labels;
+        var otu_labels = ids[0].otu_labels;
         // define labels for otu ids
         var yValues = otu_ids.slice(0,10).map(otu => "OTU " + otu).reverse()
         //define traces and filters for top 10 values
@@ -57,4 +57,36 @@ function Plots(input){
         }
         Plotly.newPlot("bubble", BubblePlot, Layoutb)
     });
-}
+};
+
+// function to change the visualizations based on the selected id
+function optionChanged(userInput){
+    Plots(userInput);
+    var panelBody = d3.select(".panel-body");
+    panelBody.html("");
+    demoInfo(userInput);
+};
+// Display the samples metadata
+defaultfunction();
+function demoInfo(idInput) {
+    d3.json("samples.json").then((samples_data) => {
+        var metadata = samples_data.metadata;
+        var ids = metadata.filter(otu => otu.id == idInput);
+        var ResultId = ids[0];
+        htmlEntry = d3.select("#sample-metadata");
+        Object.entries(ResultId).forEach(([key, value]) => {
+            htmlEntry.append("p").text(`${key}:${value}`)
+            });
+        });
+    };
+// update all the plots any time that a new sample is selected
+function defaultfunction() {
+    d3.json("samples.json").then((data)=>{
+        var names = data.names;
+        names.forEach((name => {
+            d3.select("#selDataset").append("option").tect(name).property("value", name);
+            });
+        Plots(data.names[0]);
+        demoInfo(data.names[0]);
+    });
+};
